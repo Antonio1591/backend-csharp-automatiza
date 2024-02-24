@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -15,6 +15,11 @@
 
   <ItemGroup>
     <Folder Include="Configuration\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ApiProduto.Aplicattion\ApiProduto.Aplicattion.csproj" />
+    <ProjectReference Include="..\ApiProduto.Infrastructure\ApiProduto.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
