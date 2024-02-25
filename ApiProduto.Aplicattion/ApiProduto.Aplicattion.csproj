@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\InputModel\" />
-    <Folder Include="Model\Mapping\" />
-    <Folder Include="Model\RespostaApi\" />
-    <Folder Include="Model\ViewModel\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ApiProduto.Domain\ApiProduto.Domain.csproj" />
     <ProjectReference Include="..\ApiProduto.Infrastructure\ApiProduto.Infrastructure.csproj" />
   </ItemGroup>

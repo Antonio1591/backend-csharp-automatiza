@@ -1,4 +1,4 @@
-﻿using ApiProduto.Domain.Entidades;
+﻿using ApiProduto.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiProduto.Infrastructure.Data

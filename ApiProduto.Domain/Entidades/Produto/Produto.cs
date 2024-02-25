@@ -1,4 +1,4 @@
-﻿namespace ApiProduto.Domain.Entidades
+﻿namespace ApiProduto.Domain
 {
     public class Produto
     {

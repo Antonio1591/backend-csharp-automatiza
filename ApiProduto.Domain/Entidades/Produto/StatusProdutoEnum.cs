@@ -1,11 +1,11 @@
 ﻿
-namespace ApiProduto.Domain.Entidades
+namespace ApiProduto.Domain
 {
     public enum StatusProdutoEnum
     {
         ATIVO = 0,
-        FORADELINHA=1,
-        INATIVO= 2,
+        FORADELINHA = 1,
+        INATIVO = 2,
 
     }
 }

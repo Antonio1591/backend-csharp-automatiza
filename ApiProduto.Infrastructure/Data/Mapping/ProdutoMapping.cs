@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ApiProduto.Domain.Entidades;
+using ApiProduto.Domain;
 
 namespace ApiProduto.Infrastructure.Data.Mapping
 {
-        public class ProdutoMapping : IEntityTypeConfiguration<Produto>
+    public class ProdutoMapping : IEntityTypeConfiguration<Produto>
         {
             public void Configure(EntityTypeBuilder<Produto> builder)
             {
