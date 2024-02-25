@@ -1,6 +1,6 @@
 ﻿using ApiProduto.Domain;
 
-namespace ApiProduto.Aplicattion.Model
+namespace ApiProduto.Aplicattion
 {
     public static class MarcaMapping
     {
@@ -9,7 +9,7 @@ namespace ApiProduto.Aplicattion.Model
             return new MarcaViewModel
             {
                 Id=marca.Id,
-                Descriscao=marca.Descriscao,
+                Descricao=marca.Descricao,
                 Status=marca.Status,
             };
         }

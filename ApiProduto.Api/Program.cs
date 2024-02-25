@@ -2,8 +2,6 @@ using ApiProduto.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.CofinguracaoConexaoBancoDeDados(builder.Configuration);
 builder.Services.InjecaoDependencia();

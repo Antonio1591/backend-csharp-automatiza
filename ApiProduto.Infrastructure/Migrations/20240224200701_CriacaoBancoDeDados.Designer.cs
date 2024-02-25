@@ -28,10 +28,10 @@ namespace ApiProduto.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<string>("Descriscao")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("longtext")
-                        .HasColumnName("descriscao");
+                        .HasColumnName("Descricao");
 
                     b.Property<int>("Status")
                         .HasColumnType("int")
@@ -50,10 +50,10 @@ namespace ApiProduto.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<string>("Descriscao")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("longtext")
-                        .HasColumnName("descriscao");
+                        .HasColumnName("Descricao");
 
                     b.Property<int>("Estoque")
                         .HasColumnType("int")

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiProduto.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240224205721_MapeamentoBancoDeDados")]
-    partial class MapeamentoBancoDeDados
+    [Migration("20240225152746_correcaoNomeTabelas")]
+    partial class correcaoNomeTabelas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace ApiProduto.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "8.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("ApiProduto.Domain.Entidades.Marca", b =>
+            modelBuilder.Entity("ApiProduto.Domain.Marca", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,7 +33,7 @@ namespace ApiProduto.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("Descricao");
+                        .HasColumnName("descricao");
 
                     b.Property<int>("Status")
                         .HasColumnType("int")
@@ -45,7 +45,7 @@ namespace ApiProduto.Infrastructure.Migrations
                     b.ToTable("marcas", (string)null);
                 });
 
-            modelBuilder.Entity("ApiProduto.Domain.Entidades.Produto", b =>
+            modelBuilder.Entity("ApiProduto.Domain.Produto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace ApiProduto.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("varchar(300)")
-                        .HasColumnName("Descricao");
+                        .HasColumnName("descricao");
 
                     b.Property<int>("Estoque")
                         .HasColumnType("int")
@@ -84,9 +84,9 @@ namespace ApiProduto.Infrastructure.Migrations
                     b.ToTable("produto", (string)null);
                 });
 
-            modelBuilder.Entity("ApiProduto.Domain.Entidades.Produto", b =>
+            modelBuilder.Entity("ApiProduto.Domain.Produto", b =>
                 {
-                    b.HasOne("ApiProduto.Domain.Entidades.Marca", "Marca")
+                    b.HasOne("ApiProduto.Domain.Marca", "Marca")
                         .WithMany()
                         .HasForeignKey("MarcaId")
                         .OnDelete(DeleteBehavior.Cascade)

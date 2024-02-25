@@ -1,4 +1,4 @@
-﻿using ApiProduto.Aplicattion.Model;
+﻿using ApiProduto.Aplicattion;
 using ApiProduto.Domain;
 
 namespace ApiProduto.Api.Configuration

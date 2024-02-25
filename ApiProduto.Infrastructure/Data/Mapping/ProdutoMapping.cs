@@ -10,7 +10,7 @@ namespace ApiProduto.Infrastructure.Data.Mapping
             {
                 builder.Property(P => P.Id).HasColumnType("int").IsRequired().IsUnicode();
                 builder.HasKey(P => P.Id);
-                builder.Property(P => P.Descriscao)
+                builder.Property(P => P.Descricao)
                                 .IsRequired()
                                 .HasMaxLength(300);
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApiProduto.Aplicattion.Model
+namespace ApiProduto.Aplicattion
 {
     public class RespostaApi<TViwerModel>
     {

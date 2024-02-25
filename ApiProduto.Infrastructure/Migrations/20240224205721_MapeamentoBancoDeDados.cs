@@ -19,7 +19,7 @@ namespace ApiProduto.Infrastructure.Migrations
                 oldType: "decimal(65,30)");
 
             migrationBuilder.AlterColumn<string>(
-                name: "descriscao",
+                name: "Descricao",
                 table: "produto",
                 type: "varchar(300)",
                 maxLength: 300,
@@ -30,7 +30,7 @@ namespace ApiProduto.Infrastructure.Migrations
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AlterColumn<string>(
-                name: "descriscao",
+                name: "Descricao",
                 table: "marcas",
                 type: "varchar(100)",
                 maxLength: 100,
@@ -53,7 +53,7 @@ namespace ApiProduto.Infrastructure.Migrations
                 oldType: "decimal(10,2)");
 
             migrationBuilder.AlterColumn<string>(
-                name: "descriscao",
+                name: "Descricao",
                 table: "produto",
                 type: "longtext",
                 nullable: false,
@@ -64,7 +64,7 @@ namespace ApiProduto.Infrastructure.Migrations
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AlterColumn<string>(
-                name: "descriscao",
+                name: "Descricao",
                 table: "marcas",
                 type: "longtext",
                 nullable: false,

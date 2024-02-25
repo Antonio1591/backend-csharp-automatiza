@@ -1,11 +1,11 @@
 ﻿using ApiProduto.Domain;
 
-namespace ApiProduto.Aplicattion.Model
+namespace ApiProduto.Aplicattion
 {
-    public class MarcaInputModel
+    public class MarcaViewModel
     {
         public int Id { get; set; }
-        public string Descriscao { get;  set; }
+        public string Descricao { get;  set; }
         public StatusMarcaEnum Status { get;  set; }
     }
 }

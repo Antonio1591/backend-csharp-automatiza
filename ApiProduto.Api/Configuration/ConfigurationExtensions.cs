@@ -1,4 +1,5 @@
-﻿using ApiProduto.Aplicattion.Services;
+﻿using ApiProduto.Aplicattion;
+using ApiProduto.Aplicattion.Services;
 using ApiProduto.Domain;
 using ApiProduto.Infrastructure;
 using ApiProduto.Infrastructure.Data;
@@ -20,6 +21,9 @@ namespace ApiProduto.Api.Configuration
             builder.AddScoped<IMarcaServices,MarcaServices>();
             builder.AddScoped<IMarcaServicesDomain, MarcaServicesDomain>();
             builder.AddScoped<IMarcaRepository, MarcaRepository>();
+            builder.AddScoped<IProdutoServices, ProdutoServices>();
+            builder.AddScoped<IProdutoServicesDomain, ProdutoServicesDomain>();
+            builder.AddScoped<IProdutoRepository, ProdutoRepository>();
         }
 
     }

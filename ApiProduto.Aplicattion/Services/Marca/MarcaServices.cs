@@ -1,5 +1,6 @@
-﻿using ApiProduto.Aplicattion.Model;
+﻿using ApiProduto.Aplicattion;
 using ApiProduto.Domain;
+using ApiProduto.Domain.InputDomain.Produto;
 using ApiProduto.Infrastructure;
 
 namespace ApiProduto.Aplicattion.Services
@@ -15,7 +16,7 @@ namespace ApiProduto.Aplicattion.Services
         }
         public async Task<RespostaApi<bool>> CadastrarMarca(MarcaInputModel inputModel)
         {
-            var inputdomain = new MarcaInputDomain { Descriscao = inputModel.Descriscao, Status = inputModel.Status = default };
+            var inputdomain = new MarcaInputDomain { Descricao = inputModel.Descricao, Status = inputModel.Status = default };
 
             var marca = await _marcaService.CadastrarMarca(inputdomain);
 
@@ -55,8 +56,8 @@ namespace ApiProduto.Aplicattion.Services
                     MensagemErro = new List<string> { "Marca não encontrada, verifique o Id!" },
                 };
             }
-
-            var marcaatualizada = await _marcaService.AtualizarMarca(marcaalterar, inputModel.Descriscao, inputModel.Status) ;
+            var inputdomain = new MarcaInputDomain {Id=inputModel.Id,Descricao=inputModel.Descricao,Status=inputModel.Status };
+            var marcaatualizada = await _marcaService.AtualizarMarca(marcaalterar,inputdomain) ;
 
             if (marcaatualizada.Erro)
             {
@@ -78,7 +79,7 @@ namespace ApiProduto.Aplicattion.Services
         public async Task<RespostaApi<IEnumerable<MarcaViewModel>>> ListarMarcas()
         {
             var listamarcas = await _marcaRepository.ListarMarcas();
-            if (listamarcas == null)
+            if (listamarcas == null || listamarcas.Count() <= 0)
             {
                 return new RespostaApi<IEnumerable<MarcaViewModel>>
                 {

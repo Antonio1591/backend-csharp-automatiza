@@ -29,11 +29,11 @@ namespace ApiProduto.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<string>("Descriscao")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("descriscao");
+                        .HasColumnName("Descricao");
 
                     b.Property<int>("Status")
                         .HasColumnType("int")
@@ -53,11 +53,11 @@ namespace ApiProduto.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<string>("Descriscao")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("varchar(300)")
-                        .HasColumnName("descriscao");
+                        .HasColumnName("Descricao");
 
                     b.Property<int>("Estoque")
                         .HasColumnType("int")

@@ -5,7 +5,7 @@ namespace ApiProduto.Domain
     {
         ATIVO = 0,
         FORADELINHA = 1,
-        INATIVO = 2,
+        REMOVIDO = 2,
 
     }
 }

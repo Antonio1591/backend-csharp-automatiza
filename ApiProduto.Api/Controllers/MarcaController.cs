@@ -1,13 +1,12 @@
-using ApiProduto.Aplicattion.Model;
+using ApiProduto.Aplicattion;
 using ApiProduto.Aplicattion.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace ApiProduto.Api.Controllers
 {
     [ApiController]
     [Route("Api/[controller]")]
-    public class MarcaController : ControllerBase
+    public partial class MarcaController : ControllerBase
     {
         private readonly IMarcaServices _marcaServices;
 
@@ -71,11 +70,10 @@ namespace ApiProduto.Api.Controllers
                  if (deletarmarca.Erro)
                 return BadRequest(deletarmarca);
 
-
             return Ok(deletarmarca);
         }
-
     }
+
 }
 
 

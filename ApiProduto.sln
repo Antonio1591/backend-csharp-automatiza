@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiProduto.Aplicattion", "ApiProduto.Aplicattion\ApiProduto.Aplicattion.csproj", "{E3B82E0E-8668-4002-BE1C-2878AED8DCFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiProduto.Aplicattion", "ApiProduto.Aplicattion\ApiProduto.Aplicattion.csproj", "{E3B82E0E-8668-4002-BE1C-2878AED8DCFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiProduto.Infrastructure", "ApiProduto.Infrastructure\ApiProduto.Infrastructure.csproj", "{50370C2D-1054-4DB4-85F3-76F9888337DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiProduto.Infrastructure", "ApiProduto.Infrastructure\ApiProduto.Infrastructure.csproj", "{50370C2D-1054-4DB4-85F3-76F9888337DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiProduto.Domain", "ApiProduto.Domain\ApiProduto.Domain.csproj", "{4529DDD0-4306-4047-AC31-310DE70E7107}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiProduto.Domain", "ApiProduto.Domain\ApiProduto.Domain.csproj", "{4529DDD0-4306-4047-AC31-310DE70E7107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiProduto.Api", "ApiProduto.Api\ApiProduto.Api.csproj", "{975F67B6-90BE-4561-9CB9-A7D75E07F07A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiProduto.Api", "ApiProduto.Api\ApiProduto.Api.csproj", "{975F67B6-90BE-4561-9CB9-A7D75E07F07A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

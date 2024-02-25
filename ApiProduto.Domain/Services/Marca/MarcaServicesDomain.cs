@@ -7,9 +7,9 @@ namespace ApiProduto.Domain
     {
 
         public List<string> ErrosDeValidacao = new List<string>();
-        public async Task<RespostaDomain<Marca>> AtualizarMarca(Marca marca, string descriscaoAlterar,StatusMarcaEnum statusAlterar)
+        public async Task<RespostaDomain<Marca>> AtualizarMarca(Marca marca,MarcaInputDomain inputDomain)
         {
-            var dadosValidos = ValidarDados(descriscaoAlterar, statusAlterar);
+            var dadosValidos = ValidarDados(inputDomain.Descricao,inputDomain.Status);
             if (!dadosValidos)
             {
                 return new RespostaDomain<Marca>
@@ -19,7 +19,7 @@ namespace ApiProduto.Domain
                 };
             }
  
-            marca.AtualizarMarca(marca.Id,descriscaoAlterar, statusAlterar);
+            marca.AtualizarMarca(inputDomain.Id,inputDomain.Descricao, inputDomain.Status);
 
             return new RespostaDomain<Marca>
             {
@@ -32,7 +32,7 @@ namespace ApiProduto.Domain
 
         public async Task<RespostaDomain<Marca>> CadastrarMarca(MarcaInputDomain inputDomain)
         {
-           var dadosValidos=  ValidarDados(inputDomain.Descriscao,inputDomain.Status);
+           var dadosValidos=  ValidarDados(inputDomain.Descricao,inputDomain.Status);
             if(!dadosValidos)
             {
                 return new RespostaDomain<Marca>
@@ -42,7 +42,7 @@ namespace ApiProduto.Domain
                 };
             }
 
-            var marcadomain =  new Marca(inputDomain.Descriscao,inputDomain.Status);
+            var marcadomain =  new Marca(inputDomain.Descricao,inputDomain.Status);
 
             return new RespostaDomain<Marca>
             { 
@@ -55,33 +55,22 @@ namespace ApiProduto.Domain
 
         public async Task<RespostaDomain<Marca>> DeletarMarca(Marca marca)
         {
-            
-           var dadosValidos= ValidarDados(marca.Descriscao,marca.Status);
-            if (!dadosValidos)
-            {
-                return new RespostaDomain<Marca>
-                {
-                    Erro = true,
-                    MensagemErro = ErrosDeValidacao,
-                };
-            }
-         
+
             marca.DeletarMarca();
 
             return new RespostaDomain<Marca>
             {
                 Erro = false,
                 Dados = marca,
-
             };
         }
 
-        private  bool ValidarDados(string descriscao,StatusMarcaEnum status)
+        private  bool ValidarDados(string Descricao,StatusMarcaEnum status)
         {
-            if(descriscao.Length <=3 || descriscao.Length >=100)
+            if(Descricao.Length <=3 || Descricao.Length >=100)
                 ErrosDeValidacao.Add("A descrição deve conter mais de 3 e menos 100 caracteres!");
-            if (status == null )
-                ErrosDeValidacao.Add("O Status não pode ser vazio.");
+            if (!Enum.IsDefined(typeof(StatusMarcaEnum), status))
+                ErrosDeValidacao.Add("O Status da marca não e valido!.");
 
             return  !ErrosDeValidacao.Any() ? true : false;
         }

@@ -1,41 +1,53 @@
-﻿namespace ApiProduto.Domain
+﻿using System.Text.RegularExpressions;
+
+namespace ApiProduto.Domain
 {
     public class Marca
     {
         protected Marca() { }
-        public Marca(string descriscao, StatusMarcaEnum status)
+        public Marca(string descricao, StatusMarcaEnum status)
         {
-            ValidarDados(descriscao, status);
+            ValidarDados(descricao, status);
 
-            Descriscao = descriscao;
+            Descricao = descricao;
             Status = status;
         }
 
         public int Id { get; set; }
-        public string Descriscao { get; private set; }
+        public string Descricao { get; private set; }
         public StatusMarcaEnum Status { get; private set; }
 
-        private void ValidarDados(string descriscao, StatusMarcaEnum status)
+        private void ValidarDados(string descricao, StatusMarcaEnum status)
         {
-            if (descriscao.Length <= 3 || descriscao.Length >= 100)
-                new DomainException("A descrição deve conter mais de 3 e menos 100 caracteres!");
-            if (status == null)
-                new DomainException("O Status não pode ser vazio.");
+            if (descricao.Length <= 3 || descricao.Length >= 100)
+                throw new DomainException("A descrição deve conter mais de 3 e menos 100 caracteres!");
+            if (!Enum.IsDefined(typeof(StatusMarcaEnum), status))
+                throw new DomainException("O Status da marca não é válido.");
         }
 
-        public bool AtualizarMarca(int id, string descriscao, StatusMarcaEnum status)
+        public bool AtualizarMarca(int id, string descricao, StatusMarcaEnum status)
         {
-            ValidarDados(descriscao, status);
+            ValidarDados(descricao, status);
             if (id <= 0)
-                new DomainException("Digite um id valido");
-           
-            Descriscao = descriscao;
-            Status = status;
+                throw new DomainException("Digite um id valido");
+
+            bool descricaoalterada = Descricao != descricao;
+            bool statusalterado = Status != status;
+            if (!descricaoalterada &&  !statusalterado)
+                throw new DomainException("Nenhuma informação do produto Alterada!");
+
+            if (descricaoalterada)
+                Descricao = descricao;
+            if (statusalterado)
+                Status = status;
             return true;
+          
         }
 
         public bool DeletarMarca()
         {
+            if (Id <= 0)
+                throw new DomainException("Digite um id valido,para continuar com a exclusão");
             Status = StatusMarcaEnum.REMOVIDO;
             return true;
         }

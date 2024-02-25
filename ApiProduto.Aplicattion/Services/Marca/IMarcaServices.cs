@@ -1,4 +1,4 @@
-﻿using ApiProduto.Aplicattion.Model;
+﻿using ApiProduto.Aplicattion;
 using ApiProduto.Domain;
 using System;
 using System.Collections.Generic;
