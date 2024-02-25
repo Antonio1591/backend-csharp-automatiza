@@ -24,6 +24,9 @@ namespace ApiProduto.Api.Configuration
             builder.AddScoped<IProdutoServices, ProdutoServices>();
             builder.AddScoped<IProdutoServicesDomain, ProdutoServicesDomain>();
             builder.AddScoped<IProdutoRepository, ProdutoRepository>();
+            builder.AddScoped<IApiCatalogoProdutoServices, ApiCatalogoProdutoServices>();
+            builder.AddScoped<IApiCatalogoProdutoRepository, ApiCatalogoProdutoRepository>();
+            builder.AddScoped<HttpClient>();
         }
 
     }
