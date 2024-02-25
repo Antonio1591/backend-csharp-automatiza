@@ -3,8 +3,8 @@
     public interface IMarcaServicesDomain
     {
         public Task<RespostaDomain<Marca>> CadastrarMarca(MarcaInputDomain inputDomain);
-        public RespostaDomain<Marca> AtualizarMarca(MarcaInputDomain inputDomain);
-        public RespostaDomain<Marca> Delete(MarcaInputDomain inputDomain);
+        public Task<RespostaDomain<Marca>> AtualizarMarca(Marca marca, string descriscaoAlterar, StatusMarcaEnum StatusAlterar);
+        public Task<RespostaDomain<Marca>> DeletarMarca(Marca marca);
       
     }
 }

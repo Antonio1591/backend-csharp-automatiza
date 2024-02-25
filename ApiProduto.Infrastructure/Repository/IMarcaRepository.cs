@@ -6,7 +6,7 @@ namespace ApiProduto.Infrastructure
     {
         public Task<bool> CadastrarMarca(Marca marca);
 
-        public Task<List<Marca>> ListarMarcas();
+        public Task<IEnumerable<Marca>> ListarMarcas();
 
         public Task<Marca> BuscarMarcaId(int id);
 

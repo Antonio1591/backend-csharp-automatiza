@@ -29,7 +29,7 @@ namespace ApiProduto.Infrastructure
 
         }
 
-        public async Task<List<Marca>> ListarMarcas()
+        public async Task<IEnumerable<Marca>> ListarMarcas()
         {
             return await _context.Marcas.ToListAsync();
 
@@ -37,9 +37,8 @@ namespace ApiProduto.Infrastructure
 
         public async Task<Marca> BuscarMarcaId(int id)
         {
-            var marca = await _context.Marcas.FirstOrDefaultAsync(I => I.Id == id);
+            return await _context.Marcas.FirstOrDefaultAsync(I => I.Id == id);
 
-            return marca;
         }
 
         public async Task<bool> DeletarMarca(Marca marca)

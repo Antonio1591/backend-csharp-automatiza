@@ -16,37 +16,64 @@ namespace ApiProduto.Api.Controllers
             _marcaServices = marcaServices;
         }
 
-        [HttpPost]
+        [HttpPost("CadastrarMarca")]
         public async Task<ActionResult<RespostaApi<bool>>> CadastrarMarca(MarcaInputModel inputModel)
         {
-            var marcacadastrada = _marcaServices.CadastrarMarca(inputModel);
+            var marcacadastrada = await _marcaServices.CadastrarMarca(inputModel);
 
-            if (marcacadastrada.Result.Erro)
-            {
-                return  BadRequest(marcacadastrada.Result);
-            }
+            if (marcacadastrada.Erro)
+                return BadRequest(marcacadastrada);
+            
 
-            return Ok(marcacadastrada.Result);
+            return Ok(marcacadastrada);
         }
-        //[HttpGet]
-        //public ActionResult<Task<RespostaApi<MarcaViewModel>>> BuscarMarcaId(int id)
-        //{
-        //}
 
-        //[HttpGet]
-        //public ActionResult<Task<RespostaApi<List<MarcaViewModel>>>> ListarMarcas()
-        //{
-        //}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RespostaApi<MarcaViewModel>>> BuscarMarcaId(int id)
+        {
+            var buscarMarcaId =await _marcaServices.BuscarMarcaId(id);
 
-        //[HttpPut]
-        //public ActionResult<Task<RespostaApi<bool>>> AtualizarMarca(MarcaInputModel inputModel)
-        //{
+            if(buscarMarcaId.Erro)
+                return BadRequest(buscarMarcaId);
+            return Ok(buscarMarcaId);
 
-        //}
+        }
 
-        //[HttpDelete]
-        //public ActionResult<RespostaApi<bool>> Delete(int id)
-        //{ }
+        [HttpGet("ListarMarcas")]
+        public async Task<ActionResult<RespostaApi<IEnumerable<MarcaViewModel>>>> ListarMarcas()
+        {
+            var buscarMarcaId = await _marcaServices.ListarMarcas();
+
+            if (buscarMarcaId.Erro)
+                return BadRequest(buscarMarcaId);
+            return Ok(buscarMarcaId);
+
+        }
+
+
+        [HttpPut("AtualizarMarca")]
+        public async Task<ActionResult<RespostaApi<bool>>> AtualizarMarca(MarcaInputModel inputModel)
+        {
+            var marcacadastrada =  await _marcaServices.AtualizarMarca(inputModel);
+
+            if (marcacadastrada.Erro)
+                return BadRequest(marcacadastrada);
+
+
+            return Ok(marcacadastrada);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<RespostaApi<bool>>> Delete(int id)
+        {
+            var deletarmarca= await _marcaServices.DeletarMarca(id);
+
+                 if (deletarmarca.Erro)
+                return BadRequest(deletarmarca);
+
+
+            return Ok(deletarmarca);
+        }
 
     }
 }

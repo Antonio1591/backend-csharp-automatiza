@@ -13,28 +13,60 @@ namespace ApiProduto.Aplicattion.Services
             _marcaService = marcaService;
             _marcaRepository = marcaRepository;
         }
-
-        public Task<RespostaApi<bool>> AtualizarMarca(MarcaInputModel inputModel)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public async Task<RespostaApi<bool>> CadastrarMarca(MarcaInputModel inputModel)
         {
             var inputdomain = new MarcaInputDomain { Descriscao = inputModel.Descriscao, Status = inputModel.Status = default };
 
-            var marca = _marcaService.CadastrarMarca(inputdomain);
+            var marca = await _marcaService.CadastrarMarca(inputdomain);
 
-            if (marca.Result.Erro)
+            if (marca.Erro)
             {
                 return new RespostaApi<bool>
                 {
                     Erro = true,
-                    MensagemErro = marca.Result.MensagemErro
+                    MensagemErro = marca.MensagemErro
                 };
             }
-            var retornoBanco = _marcaRepository.CadastrarMarca(marca.Result.Dados);
+            var retornoBanco = _marcaRepository.CadastrarMarca(marca.Dados);
+
+            return new RespostaApi<bool>
+            {
+                Dados = retornoBanco.Result,
+
+            };
+        }
+        public async Task<RespostaApi<bool>> AtualizarMarca(MarcaInputModel inputModel)
+        {
+            if (inputModel.Id <= 0)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Digite um Id Válido para continuar sua consulta." }
+                };
+            }
+            var marcaalterar = await _marcaRepository.BuscarMarcaId(inputModel.Id);
+
+            if (marcaalterar == null)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Marca não encontrada, verifique o Id!" },
+                };
+            }
+
+            var marcaatualizada = await _marcaService.AtualizarMarca(marcaalterar, inputModel.Descriscao, inputModel.Status) ;
+
+            if (marcaatualizada.Erro)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = marcaatualizada.MensagemErro
+                };
+            }
+            var retornoBanco = _marcaRepository.AtualizarMarca(marcaatualizada.Dados);
 
             return new RespostaApi<bool>
             {
@@ -43,18 +75,88 @@ namespace ApiProduto.Aplicattion.Services
             };
         }
 
-        public RespostaApi<bool> Delete(MarcaInputModel inputModel)
+        public async Task<RespostaApi<IEnumerable<MarcaViewModel>>> ListarMarcas()
         {
-            throw new NotImplementedException();
+            var listamarcas = await _marcaRepository.ListarMarcas();
+            if (listamarcas == null)
+            {
+                return new RespostaApi<IEnumerable<MarcaViewModel>>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Nenhuma marca encontrada." }
+                };
+            }
+
+            return new RespostaApi<IEnumerable<MarcaViewModel>>
+            {
+                Erro = false,
+                Dados = listamarcas.Select(P => P.ParaViewModel())
+            };
+
+
         }
 
-        public Task<RespostaApi<MarcaViewModel>> ListarMarcas()
-        { throw new NotImplementedException(); }
+        public async Task<RespostaApi<MarcaViewModel>> BuscarMarcaId(int id)
+        {
+            if (id <= 0)
+            {
+                return new RespostaApi<MarcaViewModel>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Digite um Id Válido para continuar sua consulta." }
+                };
+            }
+            var retornobanco = await _marcaRepository.BuscarMarcaId(id);
 
-        public Task<RespostaApi<MarcaViewModel>> BuscarMarcaId()
-        { throw new NotImplementedException(); }
+            if (retornobanco == null)
+            {
+                return new RespostaApi<MarcaViewModel>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Marca não encontrada, verifique o Id!" },
+                };
+            }
+            else
+            {
+                return new RespostaApi<MarcaViewModel>
+                {
+                    Erro = false,
+                    Dados = retornobanco.ParaViewModel()
+                };
+            }
+        }
 
-       
+        public async Task<RespostaApi<bool>> DeletarMarca(int id)
+        {
+            if (id <= 0)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Digite um Id Válido para continuar com a exclusão." }
+                };
+            }
+            var buscarmarca = await _marcaRepository.BuscarMarcaId(id);
+
+            if (buscarmarca == null)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Marca não encontrada, verifique o Id!" },
+                };
+            }
+
+            var marcadeletar = await _marcaService.DeletarMarca(buscarmarca);
+
+            var retornoBanco = _marcaRepository.DeletarMarca(marcadeletar.Dados);
+
+            return new RespostaApi<bool>
+            {
+                Dados = retornoBanco.Result,
+
+            };
+        }
 
     }
 }

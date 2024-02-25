@@ -14,7 +14,8 @@ namespace ApiProduto.Infrastructure.Data.Mapping
                                                .IsRequired()
                                                .HasMaxLength(100);
             builder.Property(P => P.Status)
-                 .IsRequired();
+                            .HasColumnType("int")
+                            .IsRequired(); 
         }
     }
 }

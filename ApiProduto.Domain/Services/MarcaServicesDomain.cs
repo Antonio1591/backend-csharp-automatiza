@@ -7,9 +7,26 @@ namespace ApiProduto.Domain
     {
 
         public List<string> ErrosDeValidacao = new List<string>();
-        public RespostaDomain<Marca> AtualizarMarca(MarcaInputDomain inputDomain)
+        public async Task<RespostaDomain<Marca>> AtualizarMarca(Marca marca, string descriscaoAlterar,StatusMarcaEnum statusAlterar)
         {
-            throw new NotImplementedException();
+            var dadosValidos = ValidarDados(descriscaoAlterar, statusAlterar);
+            if (!dadosValidos)
+            {
+                return new RespostaDomain<Marca>
+                {
+                    Erro = true,
+                    MensagemErro = ErrosDeValidacao,
+                };
+            }
+ 
+            marca.AtualizarMarca(marca.Id,descriscaoAlterar, statusAlterar);
+
+            return new RespostaDomain<Marca>
+            {
+                Erro = false,
+                Dados = marca,
+
+            };
         }
 
 
@@ -36,9 +53,27 @@ namespace ApiProduto.Domain
             
         }
 
-        public RespostaDomain<Marca> Delete(MarcaInputDomain inputDomain)
+        public async Task<RespostaDomain<Marca>> DeletarMarca(Marca marca)
         {
-            throw new NotImplementedException();
+            
+           var dadosValidos= ValidarDados(marca.Descriscao,marca.Status);
+            if (!dadosValidos)
+            {
+                return new RespostaDomain<Marca>
+                {
+                    Erro = true,
+                    MensagemErro = ErrosDeValidacao,
+                };
+            }
+         
+            marca.DeletarMarca();
+
+            return new RespostaDomain<Marca>
+            {
+                Erro = false,
+                Dados = marca,
+
+            };
         }
 
         private  bool ValidarDados(string descriscao,StatusMarcaEnum status)
