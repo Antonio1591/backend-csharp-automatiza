@@ -68,7 +68,7 @@ namespace ApiProduto.Domain
             if (descricao.Length <= 3 || descricao.Length >= 300)
                 throw new DomainException("A descrição do produto deve conter mais de 3 e menos 300 caracteres!");
             if (precovenda < 0)
-                throw new DomainException("O Preço de venda não pode ser negativo ou zerado. Verifique o preço de venda!");
+                throw new DomainException("O Preço de venda não pode ser negativo. Verifique o preço de venda!");
             if (marca == null)
                 throw new DomainException("Marca Não informada ou Invalida.");
             if (estoque < 0)

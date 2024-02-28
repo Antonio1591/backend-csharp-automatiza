@@ -109,7 +109,7 @@ namespace ApiProduto.Domain
             if (descricao.Length <= 3 || descricao.Length >= 300)
                 ErrosDeValidacao.Add("A descrição do produto deve conter mais de 3 e menos 300 caracteres!");
             if (precovenda < 0)
-                ErrosDeValidacao.Add("O Preço de venda não pode ser negativo ou zerado. Verifique o preço de venda!");
+                ErrosDeValidacao.Add("O Preço de venda não pode ser negativo. Verifique o preço de venda!");
             if (marca == null)
                 ErrosDeValidacao.Add("Marca Não informada ou Invalida.");
             if (estoque < 0)
