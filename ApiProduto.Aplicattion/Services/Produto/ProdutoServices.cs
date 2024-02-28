@@ -72,7 +72,7 @@ namespace ApiProduto.Aplicattion
                 return new RespostaApi<bool>
                 {
                     Erro = true,
-                    MensagemErro = new List<string> { "Produto não encontrada, verifique o Id!" },
+                    MensagemErro = new List<string> { "Produto não encontrado, verifique o Id!" },
                 };
             }
             var marca = await _marcaRepository.BuscarMarcaId(inputModel.Marca.Id);
@@ -114,7 +114,7 @@ namespace ApiProduto.Aplicattion
                 return new RespostaApi<IEnumerable<ProdutoViewModel>>
                 {
                     Erro = true,
-                    MensagemErro = new List<string> { "Nenhum Produto encontrada." }
+                    MensagemErro = new List<string> { "Nenhum Produto encontrado." }
                 };
             }
 
@@ -144,7 +144,7 @@ namespace ApiProduto.Aplicattion
                 return new RespostaApi<ProdutoViewModel>
                 {
                     Erro = true,
-                    MensagemErro = new List<string> { "Produto não encontrada, verifique o Id!" },
+                    MensagemErro = new List<string> { "Produto não encontrado, verifique o Id!" },
                 };
             }
             else
@@ -174,7 +174,7 @@ namespace ApiProduto.Aplicattion
                 return new RespostaApi<bool>
                 {
                     Erro = true,
-                    MensagemErro = new List<string> { "Produto não encontrada, verifique o Id!" },
+                    MensagemErro = new List<string> { "Produto não encontrado, verifique o Id!" },
                 };
             }
 
