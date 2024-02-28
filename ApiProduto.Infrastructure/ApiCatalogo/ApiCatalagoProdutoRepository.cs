@@ -1,4 +1,6 @@
-﻿namespace ApiProduto.Infrastructure
+﻿using ApiProduto.Infrastructure.ApiCatalogo;
+
+namespace ApiProduto.Infrastructure
 {
     public class ApiCatalogoProdutoRepository : IApiCatalogoProdutoRepository
     {
@@ -9,25 +11,17 @@
         }
         public async Task<HttpResponseMessage> BuscarImagem(string codigoBarras)
         {
-            var url = $"https://catalogoautomatiza.azurewebsites.net/api/produtos/{codigoBarras}";
-           return await _httpClient.GetAsync(url);
+            try
+            {
+                var url = $"https://catalogoautomatiza.azurewebsites.net/api/produtos/{codigoBarras}";
+                return await _httpClient.GetAsync(url);
+                
+            }
+            catch (Exception ex)
+            {
+                throw new ApiCatalagoException(ex.Message) ;
+            }
         }
-
-        //public async Task<ApiCatalagoProduto> BuscarImagem(string codigoBarras)
-        //{
-        //    var url = $"https://catalogoautomatiza.azurewebsites.net/api/produtos/{codigoBarras}";
-        //    var response = await _httpClient.GetAsync(url);
-
-        //    if (!response.IsSuccessStatusCode)
-        //    {
-        //        throw new HttpRequestException($"Erro ao buscar imagem: {response.StatusCode}");
-        //    }
-
-        //    var content = await response.Content.ReadAsStringAsync();
-        //    var apiCatalagoProduto = JsonConvert.DeserializeObject<ApiCatalagoProduto>(content);
-
-        //    return apiCatalagoProduto;
-        //}
     }
 }
 

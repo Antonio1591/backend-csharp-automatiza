@@ -1,5 +1,6 @@
 ﻿using ApiProduto.Domain;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace ApiProduto.Domain
 {
@@ -9,6 +10,22 @@ namespace ApiProduto.Domain
         public List<string> ErrosDeValidacao = new List<string>();
         public async Task<RespostaDomain<Marca>> AtualizarMarca(Marca marca,MarcaInputDomain inputDomain)
         {
+            if (inputDomain.Status == StatusMarcaEnum.REMOVIDO)
+            {
+                return new RespostaDomain<Marca>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Não e possivel atualizar uma marca para o status de removida,favor verificar o status e tentar novamente!" }
+                };
+            }
+            if (marca == null )
+            {
+                return new RespostaDomain<Marca>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Marca não encontrada!" }
+                };
+            }
             var dadosValidos = ValidarDados(inputDomain.Descricao,inputDomain.Status);
             if (!dadosValidos)
             {
@@ -19,7 +36,7 @@ namespace ApiProduto.Domain
                 };
             }
  
-            marca.AtualizarMarca(inputDomain.Id,inputDomain.Descricao, inputDomain.Status);
+            marca.AtualizarMarca(inputDomain.Descricao, inputDomain.Status);
 
             return new RespostaDomain<Marca>
             {
@@ -32,7 +49,15 @@ namespace ApiProduto.Domain
 
         public async Task<RespostaDomain<Marca>> CadastrarMarca(MarcaInputDomain inputDomain)
         {
-           var dadosValidos=  ValidarDados(inputDomain.Descricao,inputDomain.Status);
+            if (inputDomain.Status == StatusMarcaEnum.REMOVIDO)
+            {
+                return new RespostaDomain<Marca>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Não e possivel cadastrar uma marca com o status de removida, favor verificar o status e tentar novamente!" }
+                };
+            }
+            var dadosValidos=  ValidarDados(inputDomain.Descricao,inputDomain.Status);
             if(!dadosValidos)
             {
                 return new RespostaDomain<Marca>
@@ -55,9 +80,7 @@ namespace ApiProduto.Domain
 
         public async Task<RespostaDomain<Marca>> DeletarMarca(Marca marca)
         {
-
             marca.DeletarMarca();
-
             return new RespostaDomain<Marca>
             {
                 Erro = false,
@@ -72,7 +95,7 @@ namespace ApiProduto.Domain
             if (!Enum.IsDefined(typeof(StatusMarcaEnum), status))
                 ErrosDeValidacao.Add("O Status da marca não e valido!.");
 
-            return  !ErrosDeValidacao.Any() ? true : false;
+            return !ErrosDeValidacao.Any();
         }
        
     }

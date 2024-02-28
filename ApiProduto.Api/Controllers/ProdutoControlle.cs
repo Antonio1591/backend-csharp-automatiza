@@ -5,16 +5,16 @@ namespace ApiProduto.Api.Controllers
 {
         [ApiController]
         [Route("Api/[controller]")]
-        public class ProdutoController : ControllerBase
+        public class ProdutosController : ControllerBase
         {
             private readonly IProdutoServices _ProdutoServices;
             
-        public ProdutoController(IProdutoServices produtoServices)
+        public ProdutosController(IProdutoServices produtoServices)
         {
             _ProdutoServices = produtoServices;
         }
 
-        [HttpPost("CadastrarProduto")]
+        [HttpPost]
             public async Task<ActionResult<RespostaApi<bool>>> CadastrarProduto(ProdutoInputModel inputModel)
             {
                 var produtocadastrado = await _ProdutoServices.CadastrarProduto(inputModel);
@@ -37,7 +37,7 @@ namespace ApiProduto.Api.Controllers
 
             }
 
-            [HttpGet("ListarProdutos")]
+            [HttpGet]
             public async Task<ActionResult<RespostaApi<IEnumerable<ProdutoViewModel>>>> ListarProdutos()
             {
                 var buscarprodutoid = await _ProdutoServices.ListarProdutos();
@@ -49,10 +49,10 @@ namespace ApiProduto.Api.Controllers
             }
 
 
-            [HttpPut("AtualizarProduto")]
-            public async Task<ActionResult<RespostaApi<bool>>> AtualizarProduto(ProdutoInputModel inputModel)
+            [HttpPut("{id}")]
+            public async Task<ActionResult<RespostaApi<bool>>> AtualizarProduto(int id,ProdutoInputModel inputModel)
             {
-                var produtocadastrada = await _ProdutoServices.AtualizarProduto(inputModel);
+                var produtocadastrada = await _ProdutoServices.AtualizarProduto(id, inputModel);
 
                 if (produtocadastrada.Erro)
                     return BadRequest(produtocadastrada);

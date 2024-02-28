@@ -15,7 +15,7 @@ namespace ApiProduto.Api.Controllers
             _marcaServices = marcaServices;
         }
 
-        [HttpPost("CadastrarMarca")]
+        [HttpPost]
         public async Task<ActionResult<RespostaApi<bool>>> CadastrarMarca(MarcaInputModel inputModel)
         {
             var marcacadastrada = await _marcaServices.CadastrarMarca(inputModel);
@@ -38,7 +38,7 @@ namespace ApiProduto.Api.Controllers
 
         }
 
-        [HttpGet("ListarMarcas")]
+        [HttpGet]
         public async Task<ActionResult<RespostaApi<IEnumerable<MarcaViewModel>>>> ListarMarcas()
         {
             var buscarMarcaId = await _marcaServices.ListarMarcas();
@@ -50,10 +50,10 @@ namespace ApiProduto.Api.Controllers
         }
 
 
-        [HttpPut("AtualizarMarca")]
-        public async Task<ActionResult<RespostaApi<bool>>> AtualizarMarca(MarcaInputModel inputModel)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<RespostaApi<bool>>> AtualizarMarca(int id,MarcaInputModel inputModel)
         {
-            var marcacadastrada =  await _marcaServices.AtualizarMarca(inputModel);
+            var marcacadastrada =  await _marcaServices.AtualizarMarca(id,inputModel);
 
             if (marcacadastrada.Erro)
                 return BadRequest(marcacadastrada);
@@ -75,12 +75,3 @@ namespace ApiProduto.Api.Controllers
     }
 
 }
-
-
-//POST / api / marcas: cadastrar uma nova marca.
-//        GET /api/marcas: listar todas as marcas.
-//    GET /api/marcas/{ id}: Retorna os detalhes de uma marca específica pelo id.
-//    PUT /api/marcas/{id
-//    }: Atualiza os dados de uma marca existente.
-//    DELETE /api/marcas/{id
-//}: Remove uma marca do sistema.

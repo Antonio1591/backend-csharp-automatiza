@@ -17,11 +17,25 @@ namespace ApiProduto.Aplicattion
         }
         public async Task<RespostaApi<bool>> CadastrarProduto(ProdutoInputModel inputModel)
         {
+            if (inputModel.Status == StatusProdutoEnum.REMOVIDO)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Não e possivel cadastrar um Produto com o status de removido, favor verificar o status e tentar novamente." }
+                };
+            }
             var marca = await  _marcaRepository.BuscarMarcaId(inputModel.Marca.Id);
+            if(marca == null || marca.Status == StatusMarcaEnum.REMOVIDO)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Marca não encontrada ou marca deletada." }
+                };
+            }
 
-            inputModel.Marca= marca;
-
-            var inputdomain = new ProdutoInputDomain { Id=inputModel.Id,Descricao=inputModel.Descricao,PrecoVenda=inputModel.PrecoVenda,Marca=inputModel.Marca,Estoque=inputModel.Estoque,Status=inputModel.Status};
+            var inputdomain = new ProdutoInputDomain { Descricao=inputModel.Descricao,PrecoVenda=inputModel.PrecoVenda,Marca=marca,Estoque=inputModel.Estoque,Status=inputModel.Status};
 
             var produto = await _produtoservices.CadastrarProduto(inputdomain);
 
@@ -41,9 +55,9 @@ namespace ApiProduto.Aplicattion
 
             };
         }
-        public async Task<RespostaApi<bool>> AtualizarProduto(ProdutoInputModel inputModel)
+        public async Task<RespostaApi<bool>> AtualizarProduto(int id,ProdutoInputModel inputModel)
         {
-            if (inputModel.Id <= 0)
+            if (id <= 0)
             {
                 return new RespostaApi<bool>
                 {
@@ -51,7 +65,7 @@ namespace ApiProduto.Aplicattion
                     MensagemErro = new List<string> { "Digite um Id Válido para continuar sua consulta." }
                 };
             }
-            var produtoalterar = await _produtorepository.BuscarProdutoId(inputModel.Id);
+            var produtoalterar = await _produtorepository.BuscarProdutoId(id);
 
             if (produtoalterar == null)
             {
@@ -62,11 +76,17 @@ namespace ApiProduto.Aplicattion
                 };
             }
             var marca = await _marcaRepository.BuscarMarcaId(inputModel.Marca.Id);
+            if (marca == null || marca.Status == StatusMarcaEnum.REMOVIDO)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Marca não encontrada ou marca deletada." }
+                };
+            }
 
-            inputModel.Marca = marca;
+            var inputdomain = new ProdutoInputDomain { Descricao = inputModel.Descricao, PrecoVenda = inputModel.PrecoVenda, Marca = marca, Estoque = inputModel.Estoque, Status = inputModel.Status };
 
-            var inputdomain = new ProdutoInputDomain { Id = inputModel.Id, Descricao = inputModel.Descricao, PrecoVenda = inputModel.PrecoVenda, Marca = inputModel.Marca, Estoque = inputModel.Estoque, Status = inputModel.Status };
-          
             var produtoatualizada = await _produtoservices.AtualizarProduto(produtoalterar, inputdomain);
 
             if (produtoatualizada.Erro)

@@ -8,7 +8,6 @@ namespace ApiProduto.Domain.InputDomain.Produto
 {
     public class ProdutoInputDomain
     {
-        public int Id { get; set; }
         public string Descricao { get;set; }
         public decimal PrecoVenda { get;set; }
         public Marca Marca { get;set; }

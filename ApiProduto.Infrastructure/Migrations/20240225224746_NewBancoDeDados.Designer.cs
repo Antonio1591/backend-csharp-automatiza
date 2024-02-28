@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiProduto.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240225152746_correcaoNomeTabelas")]
-    partial class correcaoNomeTabelas
+    [Migration("20240225224746_NewBancoDeDados")]
+    partial class NewBancoDeDados
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

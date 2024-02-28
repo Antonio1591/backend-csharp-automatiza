@@ -14,9 +14,17 @@ namespace ApiProduto.Aplicattion.Services
             _marcaService = marcaService;
             _marcaRepository = marcaRepository;
         }
-        public async Task<RespostaApi<bool>> CadastrarMarca(MarcaInputModel inputModel)
+        public async Task<RespostaApi<bool>> CadastrarMarca( MarcaInputModel inputModel)
         {
-            var inputdomain = new MarcaInputDomain { Descricao = inputModel.Descricao, Status = inputModel.Status = default };
+            if (inputModel.Status == StatusMarcaEnum.REMOVIDO)
+            {
+                return new RespostaApi<bool>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Não e possivel cadastrar uma marca com o status de removida, favor verificar o status e tentar novamente" }
+                };
+            }
+            var inputdomain = new MarcaInputDomain { Descricao = inputModel.Descricao, Status = inputModel.Status };
 
             var marca = await _marcaService.CadastrarMarca(inputdomain);
 
@@ -36,9 +44,9 @@ namespace ApiProduto.Aplicattion.Services
 
             };
         }
-        public async Task<RespostaApi<bool>> AtualizarMarca(MarcaInputModel inputModel)
+        public async Task<RespostaApi<bool>> AtualizarMarca(int id,MarcaInputModel inputModel)
         {
-            if (inputModel.Id <= 0)
+            if (id <= 0)
             {
                 return new RespostaApi<bool>
                 {
@@ -46,7 +54,7 @@ namespace ApiProduto.Aplicattion.Services
                     MensagemErro = new List<string> { "Digite um Id Válido para continuar sua consulta." }
                 };
             }
-            var marcaalterar = await _marcaRepository.BuscarMarcaId(inputModel.Id);
+            var marcaalterar = await _marcaRepository.BuscarMarcaId(id);
 
             if (marcaalterar == null)
             {
@@ -56,7 +64,7 @@ namespace ApiProduto.Aplicattion.Services
                     MensagemErro = new List<string> { "Marca não encontrada, verifique o Id!" },
                 };
             }
-            var inputdomain = new MarcaInputDomain {Id=inputModel.Id,Descricao=inputModel.Descricao,Status=inputModel.Status };
+            var inputdomain = new MarcaInputDomain {Descricao=inputModel.Descricao,Status=inputModel.Status };
             var marcaatualizada = await _marcaService.AtualizarMarca(marcaalterar,inputdomain) ;
 
             if (marcaatualizada.Erro)

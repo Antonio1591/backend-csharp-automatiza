@@ -8,7 +8,8 @@ namespace ApiProduto.Domain
         public Marca(string descricao, StatusMarcaEnum status)
         {
             ValidarDados(descricao, status);
-
+            if (status == StatusMarcaEnum.REMOVIDO)
+                throw new DomainException("Não e possivel cadastrar uma marca com o status de removida, favor verificar o status e tentar novamente!");
             Descricao = descricao;
             Status = status;
         }
@@ -25,12 +26,13 @@ namespace ApiProduto.Domain
                 throw new DomainException("O Status da marca não é válido.");
         }
 
-        public bool AtualizarMarca(int id, string descricao, StatusMarcaEnum status)
+        public bool AtualizarMarca(string descricao, StatusMarcaEnum status)
         {
             ValidarDados(descricao, status);
-            if (id <= 0)
+            if (Id <= 0)
                 throw new DomainException("Digite um id valido");
-
+            if (status == StatusMarcaEnum.REMOVIDO)
+                throw new DomainException("Não e possivel atualizar uma marca para o status de removida,favor verificar o status e tentar novamente!");
             bool descricaoalterada = Descricao != descricao;
             bool statusalterado = Status != status;
             if (!descricaoalterada &&  !statusalterado)

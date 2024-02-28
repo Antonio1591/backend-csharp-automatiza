@@ -13,7 +13,7 @@ namespace ApiProduto.Aplicattion.Services
         public Task<RespostaApi<bool>> CadastrarMarca(MarcaInputModel inputModel);
         public Task<RespostaApi<IEnumerable<MarcaViewModel>>> ListarMarcas();
         public Task<RespostaApi<MarcaViewModel>> BuscarMarcaId(int id);
-        public Task<RespostaApi<bool>> AtualizarMarca(MarcaInputModel inputModel);
+        public Task<RespostaApi<bool>> AtualizarMarca(int id, MarcaInputModel inputModel);
         public Task<RespostaApi<bool>> DeletarMarca(int id);
     }
 }

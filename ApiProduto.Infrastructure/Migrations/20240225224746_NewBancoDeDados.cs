@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ApiProduto.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CriacaoBancoDeDados : Migration
+    public partial class NewBancoDeDados : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace ApiProduto.Infrastructure.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Descricao = table.Column<string>(type: "longtext", nullable: false)
+                    descricao = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     status = table.Column<int>(type: "int", nullable: false)
                 },
@@ -36,9 +36,9 @@ namespace ApiProduto.Infrastructure.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Descricao = table.Column<string>(type: "longtext", nullable: false)
+                    descricao = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    preco_venda = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    preco_venda = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     marca_id = table.Column<int>(type: "int", nullable: false),
                     estoque = table.Column<int>(type: "int", nullable: false),
                     status = table.Column<int>(type: "int", nullable: false)

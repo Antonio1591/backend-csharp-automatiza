@@ -7,8 +7,31 @@ namespace ApiProduto.Domain
         public List<string> ErrosDeValidacao = new List<string>();
         public async Task<RespostaDomain<Produto>> AtualizarProduto(Produto Produto, ProdutoInputDomain inputDomain)
         {
-            //Colocado para validar apenas o Input, pois devido fazer a busca antes da entidade Produto, entedesse que esta correto os dados,
-            //e caso de algum erro de importação de dados com o atualizar o cliente vai conseguir informar os dados validos
+            if (Produto == null )
+            {
+                return new RespostaDomain<Produto>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Produto não encontrado,verifique os dados novamente!" }
+                };
+            }
+            if (inputDomain.Status == StatusProdutoEnum.REMOVIDO)
+            {
+                return new RespostaDomain<Produto>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Não e possivel atualizar um produto para o status de removido, favor verificar o status e tentar novamente!" }
+                };
+            }
+
+            if (inputDomain.Marca == null || inputDomain.Marca.Status == StatusMarcaEnum.REMOVIDO)
+            {
+                return new RespostaDomain<Produto>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Marca não encontrada ou marca deletada!" }
+                };
+            }
 
             var dadosProdutoDomain = ValidarDados(inputDomain.Descricao, inputDomain.PrecoVenda, inputDomain.Marca, inputDomain.Estoque, inputDomain.Status);
             if (!dadosProdutoDomain)
@@ -20,7 +43,7 @@ namespace ApiProduto.Domain
                 };
             }
 
-            Produto.AtualizarDados( inputDomain.Id,inputDomain.Descricao,inputDomain.PrecoVenda,inputDomain.Marca,inputDomain.Estoque,inputDomain.Status);
+            Produto.AtualizarDados(inputDomain.Descricao,inputDomain.PrecoVenda,inputDomain.Marca,inputDomain.Estoque,inputDomain.Status);
 
             return new RespostaDomain<Produto>
             {
@@ -33,7 +56,23 @@ namespace ApiProduto.Domain
 
         public async Task<RespostaDomain<Produto>> CadastrarProduto(ProdutoInputDomain inputDomain)
         {
-           var dadosvalidos= ValidarDados(inputDomain.Descricao, inputDomain.PrecoVenda, inputDomain.Marca, inputDomain.Estoque, inputDomain.Status);
+            if (inputDomain.Status == StatusProdutoEnum.REMOVIDO)
+            {
+                return new RespostaDomain<Produto>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Não e possivel adicionar um produto comm o status de removido!" }
+                };
+            }
+            if (inputDomain.Marca == null || inputDomain.Marca.Status == StatusMarcaEnum.REMOVIDO)
+            {
+                return new RespostaDomain<Produto>
+                {
+                    Erro = true,
+                    MensagemErro = new List<string> { "Marca não encontrada ou marca deletada!" }
+                };
+            }
+            var dadosvalidos= ValidarDados(inputDomain.Descricao, inputDomain.PrecoVenda, inputDomain.Marca, inputDomain.Estoque, inputDomain.Status);
             if (!dadosvalidos)
             {
                 return new RespostaDomain<Produto>
@@ -68,8 +107,8 @@ namespace ApiProduto.Domain
         private bool ValidarDados(string descricao, decimal precovenda,Marca marca,int estoque,StatusProdutoEnum status)
         {
             if (descricao.Length <= 3 || descricao.Length >= 300)
-                ErrosDeValidacao.Add("A descrição deve conter mais de 3 e menos 300 caracteres!");
-            if (precovenda <= 0)
+                ErrosDeValidacao.Add("A descrição do produto deve conter mais de 3 e menos 300 caracteres!");
+            if (precovenda < 0)
                 ErrosDeValidacao.Add("O Preço de venda não pode ser negativo ou zerado. Verifique o preço de venda!");
             if (marca == null)
                 ErrosDeValidacao.Add("Marca Não informada ou Invalida.");

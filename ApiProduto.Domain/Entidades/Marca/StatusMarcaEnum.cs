@@ -3,7 +3,6 @@
     public enum StatusMarcaEnum
     {
         ATIVO=0,
-        INATIVO=1,
-        REMOVIDO=2
+        REMOVIDO=1
     }
 }
